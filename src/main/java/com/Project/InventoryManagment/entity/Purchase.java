@@ -3,10 +3,12 @@ package com.Project.InventoryManagment.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 
 @Entity(name="purchaseTbl")
 public class Purchase {
@@ -14,13 +16,12 @@ public class Purchase {
 	private long id;
 	private long purchaseId;
 	private Date date;
-	private String productName; 
+	@NotBlank(message="Product Name maintion")
+	private String productName;
+	@NotBlank(message="Quantity is Mandatory")
 	private String quantity;
 	private double unitPrice;
 	private double totalCost;
-	
-	@OneToOne(mappedBy="purchase")
-	private Customer customer;
 	
 	public long getId() {
 		return id;

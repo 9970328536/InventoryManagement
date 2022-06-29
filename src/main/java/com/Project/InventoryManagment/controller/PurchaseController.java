@@ -3,6 +3,8 @@ package com.Project.InventoryManagment.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class PurchaseController {
 	PurchaseService purchaseService;
 	
 	@PostMapping
-	public ResponseEntity<Purchase> savePurchase(@RequestBody Purchase purchase){
+	public ResponseEntity<Purchase> savePurchase(@Valid @RequestBody Purchase purchase){
 		return new ResponseEntity<Purchase>(purchaseService.savePurchase(purchase), HttpStatus.CREATED);
 	}
 	
@@ -40,7 +42,7 @@ public class PurchaseController {
 	}
 	
 	@PutMapping("/{id}")
-	public Purchase updatePurchaseById(@PathVariable ("id") long id,@RequestBody  Purchase purchase) {
+	public Purchase updatePurchaseById(@PathVariable ("id") long id,@Valid @RequestBody  Purchase purchase) {
 		return purchaseService.updatePurchaseById(id,purchase);
 	}
 	

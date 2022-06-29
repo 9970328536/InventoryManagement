@@ -12,6 +12,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,22 +21,16 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	@NotBlank(message="code is Mandatory")
 	 private String prd_code;
+	@NotBlank(message="Product name is Mandatory")
 	 private String productName;
+	@NotBlank(message="Description is Mandatory")
 	 private String description;
 	 private double price;
 	 private int quantity;
 	 
-	 @ManyToOne(fetch=FetchType.LAZY)
-	 @JoinColumn(name="venditorId")
-	 @JsonIgnoreProperties("product")
-	 private Venditor venditor;
-	 
-	 @ManyToMany(fetch=FetchType.LAZY)
-	 @JoinTable(name="product_customer", joinColumns= @JoinColumn(name="productId"), inverseJoinColumns=@JoinColumn(name="customerId"))
-	 @JsonIgnoreProperties("products")
-	 private List<Customer> customers;
-	 
+	
 	 public long getId() {
 		return id;
 	}
@@ -84,22 +79,7 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public Venditor getVenditor() {
-		return venditor;
-	}
-
-	public void setVenditor(Venditor venditor) {
-		this.venditor = venditor;
-	}
-
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
-
+	
 	public Product(long id, String prd_code, String productName, String description, double price, int quantity,
 			Venditor venditor, List<Customer> customers) {
 		super();
@@ -109,8 +89,7 @@ public class Product {
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
-		this.venditor = venditor;
-		this.customers = customers;
+		
 	}
 	public Product() {
 		super();
@@ -120,7 +99,6 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", prd_code=" + prd_code + ", productName=" + productName + ", description="
-				+ description + ", price=" + price + ", quantity=" + quantity + ", venditor=" + venditor
-				+ ", customers=" + customers + "]";
+				+ description + ", price=" + price + ", quantity=" + quantity + "]";
 	}
 		}

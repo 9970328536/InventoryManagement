@@ -70,6 +70,5 @@ public class GlobalExceptionHandlers {
 	    });
 	    return new ResponseEntity<Map<String,String>>(errors, HttpStatus.BAD_REQUEST);
 	}
-
 }
 

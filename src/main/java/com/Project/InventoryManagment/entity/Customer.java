@@ -34,19 +34,6 @@ public class Customer {
 	@Email(message="Invalied Email")
 	private String email;
 	
-	@ManyToMany(mappedBy="customers")
-    @JsonIgnoreProperties("customers")
-	private List<Product> products;
-	
-	@OneToOne	
-	private Purchase purchase;
-	
-	public List<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
 	public long getId() {
 		return id;
 	}
@@ -93,7 +80,6 @@ public class Customer {
 		this.address = address;
 		this.contactNo = contactNo;
 		this.email = email;
-		this.products = products;
 	}
 	public Customer() {
 		super();
@@ -103,6 +89,6 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", custId=" + custId + ", custName=" + custName + ", address=" + address
-				+ ", contactNo=" + contactNo + ", email=" + email + ", products=" + products + "]";
+				+ ", contactNo=" + contactNo + ", email=" + email + "]";
 	}
 }

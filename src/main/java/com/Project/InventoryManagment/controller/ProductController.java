@@ -2,6 +2,8 @@ package com.Project.InventoryManagment.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ public class ProductController {
 	ProductService productService;
 		
 	@PostMapping
-	public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+	public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product) {
 		return new ResponseEntity<Product>(productService.saveProduct(product), HttpStatus.CREATED);
 	}
 
@@ -38,7 +40,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/{id}")
-	public Product UpdateProduct(@PathVariable("id")long id, @RequestBody Product product) {
+	public Product UpdateProduct(@PathVariable("id")long id,@Valid @RequestBody Product product) {
 	return productService.UpdateProduct(id,product);
 }
 	

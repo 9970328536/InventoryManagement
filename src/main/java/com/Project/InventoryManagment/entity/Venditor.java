@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,30 +18,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Venditor {
     
 	@Id
-	@NotBlank()
      private long id;
+	@NotBlank(message="Id is Mandatory")
      private String supId;
+	@NotBlank(message="Supplier Name is Mandatory")
      private String supName;
+	@NotBlank(message="Supplier Address is Mandatory")
      private String supAddress;
      private long contactNo;
+ 	@NotBlank(message="Email is Mandatory")
+ 	@Email(message="Invalied Email")
      private String email;
      private boolean status;
      
-     @OneToMany(mappedBy="venditor",cascade= CascadeType.ALL)
-     @JsonIgnoreProperties("venditor")
-     private List<Product> products; 
-     
+        
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	public List<Product> getProduct() {
-		return products;
-	}
-	public void setProduct(List<Product> product) {
-		this.products = product;
 	}
 	public String getSupId() {
 		return supId;
@@ -89,7 +85,6 @@ public class Venditor {
 		this.contactNo = contactNo;
 		this.email = email;
 		this.status = status;
-		this.products = product;
 	}
 	public Venditor() {
 		super();
@@ -99,6 +94,6 @@ public class Venditor {
 	@Override
 	public String toString() {
 		return "Venditor [id=" + id + ", supId=" + supId + ", supName=" + supName + ", supAddress=" + supAddress
-				+ ", contactNo=" + contactNo + ", email=" + email + ", status=" + status + ", product=" + products + "]";
+				+ ", contactNo=" + contactNo + ", email=" + email + ", status=" + status + "]";
 	}
 }
