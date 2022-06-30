@@ -7,10 +7,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name="purchaseTbl")
+@JsonIgnoreProperties("hibernateLazyInitializer")
+
 public class Purchase {
      @Id
 	private long id;
@@ -23,6 +29,17 @@ public class Purchase {
 	private double unitPrice;
 	private double totalCost;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	 @JoinColumn(name="custId")
+	 @JsonIgnoreProperties("purchases")
+	 private Customer customer;
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	public long getId() {
 		return id;
 	}
@@ -65,8 +82,12 @@ public class Purchase {
 	public void setTotalCost(double totalCost) {
 		this.totalCost = totalCost;
 	}
-	public Purchase(long id, long purchaseId, Date date, String productName, String quantity, double unitPrice,
-			double totalCost) {
+	
+	
+	public Purchase(long id, long purchaseId, Date date,
+			@NotBlank(message = "Product Name maintion") String productName,
+			@NotBlank(message = "Quantity is Mandatory") String quantity, double unitPrice, double totalCost,
+			Customer customer) {
 		super();
 		this.id = id;
 		this.purchaseId = purchaseId;
@@ -75,6 +96,7 @@ public class Purchase {
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 		this.totalCost = totalCost;
+		this.customer = customer;
 	}
 	public Purchase() {
 		super();
@@ -83,7 +105,8 @@ public class Purchase {
 	@Override
 	public String toString() {
 		return "Purchase [id=" + id + ", purchaseId=" + purchaseId + ", date=" + date + ", productName=" + productName
-				+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", totalCost=" + totalCost + "]";
+				+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", totalCost=" + totalCost + ", customer="
+				+ customer + "]";
 	}
 	
 }

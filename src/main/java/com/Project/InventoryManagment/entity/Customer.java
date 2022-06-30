@@ -4,21 +4,19 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.JoinTable;
+//import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @Entity(name="CustomerTbl")
+@JsonIgnoreProperties("hibernateLazyInitializer")
 public class Customer {
 	 
 	@Id
@@ -33,12 +31,33 @@ public class Customer {
 	@NotBlank(message="Email is Mandatory")
 	@Email(message="Invalied Email")
 	private String email;
+//	
+//	@ManyToMany(mappedBy="customers")
+//	@JsonIgnoreProperties("customers")
+//	private List<Product> products;
+	
+    @OneToMany(mappedBy="customer",cascade=CascadeType.PERSIST)
+	@JsonIgnoreProperties("customer")
+     private List<Purchase> purchases;
 	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+//	public List<Product> getProducts() {
+//		return products;
+//	}
+//	public void setProducts(List<Product> products) {
+//		this.products = products;
+//	}
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 	public String getCustId() {
 		return custId;
@@ -71,8 +90,11 @@ public class Customer {
 		this.email = email;
 	}
 	
-	public Customer(long id, String custId, String custName, String address, long contactNo, String email,
-			List<Product> products) {
+	public Customer(long id, @NotBlank(message = "Id is Mandatory") String custId,
+			@NotBlank(message = "Name is Mandatory") String custName,
+			@NotBlank(message = "Address is Mandatory") String address, long contactNo,
+			@NotBlank(message = "Email is Mandatory") @Email(message = "Invalied Email") String email,
+			List<Product> products, List<Purchase> purchases) {
 		super();
 		this.id = id;
 		this.custId = custId;
@@ -80,7 +102,10 @@ public class Customer {
 		this.address = address;
 		this.contactNo = contactNo;
 		this.email = email;
+//		this.products = products;
+		this.purchases = purchases;
 	}
+	
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -89,6 +114,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", custId=" + custId + ", custName=" + custName + ", address=" + address
-				+ ", contactNo=" + contactNo + ", email=" + email + "]";
+				+ ", contactNo=" + contactNo + ", email=" + email + /*", products=" + products + */", purchases="
+				+ purchases + "]";
 	}
 }
