@@ -2,57 +2,49 @@ package com.Project.InventoryManagment.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-//import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @Entity(name="ProductTbl")
-@JsonIgnoreProperties("hibernateLazyInitializer")
 public class Product {
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue=101)
 	private long id;
+	@Column(nullable=false)
 	@NotBlank(message="code is Mandatory")
 	 private String prd_code;
+	@Column(nullable=false)
 	@NotBlank(message="Product name is Mandatory")
 	 private String productName;
+	@Column(nullable=false)
 	@NotBlank(message="Description is Mandatory")
 	 private String description;
 	 private double price;
 	 private int quantity;
 	 
 	 @ManyToOne(fetch=FetchType.LAZY)
-	 @JoinColumn(name="supId")
-	 @JsonIgnoreProperties("products")
+	 @JsonIgnoreProperties("product")
 	 private Venditor venditor;
 	 
-//	 @ManyToMany
-//	 @JsonIgnoreProperties("products") 
-//	 private List<Customer> customers;
-	 
-	 public Venditor getVenditor() {
-		return venditor;
-	}
-
-	public void setVenditor(Venditor venditor) {
-		this.venditor = venditor;
-	}
-//
-//	public List<Customer> getCustomers() {
-//		return customers;
-//	}
-//
-//	public void setCustomers(List<Customer> customers) {
-//		this.customers = customers;
-//	}
+	 @ManyToMany
+	 @JsonIgnoreProperties("product")
+	 @JoinTable(name="product_customer", joinColumns= @JoinColumn(name="prdid"), inverseJoinColumns= @JoinColumn(name="custid") )
+	 private List<Customer> customer; 
 
 	public long getId() {
 		return id;
@@ -101,13 +93,27 @@ public class Product {
 	public void setquantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
+	public Venditor getVenditor() {
+		return venditor;
+	}
 
+	public void setVenditor(Venditor venditor) {
+		this.venditor = venditor;
+	}
+
+	public List<Customer> getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(List<Customer> customer) {
+		this.customer = customer;
+	}
+	
 	public Product(long id, @NotBlank(message = "code is Mandatory") String prd_code,
-			
 			@NotBlank(message = "Product name is Mandatory") String productName,
-			
 			@NotBlank(message = "Description is Mandatory") String description, double price, int quantity,
-		Venditor venditor, List<Customer> customers) {
+			Venditor venditor, List<Customer> customer) {
 		super();
 		this.id = id;
 		this.prd_code = prd_code;
@@ -116,8 +122,9 @@ public class Product {
 		this.price = price;
 		this.quantity = quantity;
 		this.venditor = venditor;
-	//	this.customers = customers;
+		this.customer = customer;
 	}
+
 
 	public Product() {
 		super();
@@ -127,7 +134,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", prd_code=" + prd_code + ", productName=" + productName + ", description="
-				+ description + ", price=" + price + ", quantity=" + quantity + ", venditor=" + venditor
-				+ /*", customers=" + customers +*/ "]";
+				+ description + ", price=" + price + ", quantity=" + quantity + ", venditor=" + venditor + ", customer="
+				+ customer + "]";
 	}
 		}

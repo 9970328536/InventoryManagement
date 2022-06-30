@@ -2,42 +2,47 @@ package com.Project.InventoryManagment.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.boot.autoconfigure.cache.CacheType;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+
 @Entity(name="SupplierTbl")
-@JsonIgnoreProperties("hibernateLazyInitializer")
-public class Venditor {
+public class Venditor  {
     
 	@Id
+	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue=1)
      private long id;
+	@Column(nullable=false)
 	@NotBlank(message="Id is Mandatory")
      private String supId;
+	@Column(nullable=false)
 	@NotBlank(message="Supplier Name is Mandatory")
      private String supName;
+	@Column(nullable=false)
 	@NotBlank(message="Supplier Address is Mandatory")
      private String supAddress;
      private long contactNo;
+ 	@Column(nullable=false)
  	@NotBlank(message="Email is Mandatory")
  	@Email(message="Invalied Email")
      private String email;
      private boolean status;
      
-     @OneToMany(mappedBy="venditor",cascade=CascadeType.PERSIST)
- 	  @JsonIgnoreProperties("venditor")
- 	   private List<Product> products;
-        
+     @OneToMany(mappedBy="venditor")
+     @JsonIgnoreProperties("venditor")
+     private List<Product> product;
+             
 	public long getId() {
 		return id;
 	}
@@ -48,12 +53,6 @@ public class Venditor {
 		return supId;
 	}
 	
-	public List<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
 	public void setSupId(String supId) {
 		this.supId = supId;
 	}
@@ -87,21 +86,11 @@ public class Venditor {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
-	public Venditor(long id, @NotBlank(message = "Id is Mandatory") String supId,
-			@NotBlank(message = "Supplier Name is Mandatory") String supName,
-			@NotBlank(message = "Supplier Address is Mandatory") String supAddress, long contactNo,
-			@NotBlank(message = "Email is Mandatory") @Email(message = "Invalied Email") String email, boolean status,
-			List<Product> products) {
-		super();
-		this.id = id;
-		this.supId = supId;
-		this.supName = supName;
-		this.supAddress = supAddress;
-		this.contactNo = contactNo;
-		this.email = email;
-		this.status = status;
-		this.products = products;
+	public List<Product> getProduct() {
+		return product;
+	}
+	public void setProduct(List<Product> product) {
+		this.product = product;
 	}
 	
 	public Venditor() {
@@ -112,7 +101,22 @@ public class Venditor {
 	@Override
 	public String toString() {
 		return "Venditor [id=" + id + ", supId=" + supId + ", supName=" + supName + ", supAddress=" + supAddress
-				+ ", contactNo=" + contactNo + ", email=" + email + ", status=" + status + ", products=" + products
-				+ "]";
+				+ ", contactNo=" + contactNo + ", email=" + email + ", status=" + status + ", product=" + product + "]";
+	}
+	
+	public Venditor(long id, @NotBlank(message = "Id is Mandatory") String supId,
+			@NotBlank(message = "Supplier Name is Mandatory") String supName,
+			@NotBlank(message = "Supplier Address is Mandatory") String supAddress, long contactNo,
+			@NotBlank(message = "Email is Mandatory") @Email(message = "Invalied Email") String email, boolean status,
+			List<Product> product) {
+		super();
+		this.id = id;
+		this.supId = supId;
+		this.supName = supName;
+		this.supAddress = supAddress;
+		this.contactNo = contactNo;
+		this.email = email;
+		this.status = status;
+		this.product = product;
 	}
 }

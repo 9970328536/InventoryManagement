@@ -3,42 +3,49 @@ package com.Project.InventoryManagment.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.JoinTable;
-//import javax.persistence.ManyToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
-@Entity(name="CustomerTbl")
-@JsonIgnoreProperties("hibernateLazyInitializer")
-public class Customer {
+@Entity
+@Table(name="customerTbl")
+public class Customer  {
 	 
 	@Id
+	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue=101)
 	private long id;
+	@Column(nullable=false)
 	@NotBlank(message="Id is Mandatory")
 	private String custId;
+	@Column(nullable=false)
 	@NotBlank(message="Name is Mandatory")
 	private String custName;
+	@Column(nullable=false)
 	@NotBlank(message="Address is Mandatory")
 	private String address;
 	private long contactNo;
 	@NotBlank(message="Email is Mandatory")
 	@Email(message="Invalied Email")
 	private String email;
-//	
-//	@ManyToMany(mappedBy="customers")
-//	@JsonIgnoreProperties("customers")
-//	private List<Product> products;
 	
-    @OneToMany(mappedBy="customer",cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
 	@JsonIgnoreProperties("customer")
-     private List<Purchase> purchases;
+	private List<Purchase> purchase;
+	
+	@ManyToMany(mappedBy="customer")
+	@JsonIgnoreProperties("customer")
+	private List<Product> product;
 	
 	public long getId() {
 		return id;
@@ -47,18 +54,6 @@ public class Customer {
 		this.id = id;
 	}
 	
-//	public List<Product> getProducts() {
-//		return products;
-//	}
-//	public void setProducts(List<Product> products) {
-//		this.products = products;
-//	}
-	public List<Purchase> getPurchases() {
-		return purchases;
-	}
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
-	}
 	public String getCustId() {
 		return custId;
 	}
@@ -90,11 +85,24 @@ public class Customer {
 		this.email = email;
 	}
 	
+	public List<Purchase> getPurchase() {
+		return purchase;
+	}
+	public void setPurchase(List<Purchase> purchase) {
+		this.purchase = purchase;
+	}
+	public List<Product> getProduct() {
+		return product;
+	}
+	public void setProduct(List<Product> product) {
+		this.product = product;
+	}
+	
 	public Customer(long id, @NotBlank(message = "Id is Mandatory") String custId,
 			@NotBlank(message = "Name is Mandatory") String custName,
 			@NotBlank(message = "Address is Mandatory") String address, long contactNo,
 			@NotBlank(message = "Email is Mandatory") @Email(message = "Invalied Email") String email,
-			List<Product> products, List<Purchase> purchases) {
+			List<Purchase> purchase, List<Product> product) {
 		super();
 		this.id = id;
 		this.custId = custId;
@@ -102,10 +110,22 @@ public class Customer {
 		this.address = address;
 		this.contactNo = contactNo;
 		this.email = email;
-//		this.products = products;
-		this.purchases = purchases;
+		this.purchase = purchase;
+		this.product = product;
 	}
-	
+	public Customer(long id, @NotBlank(message = "Id is Mandatory") String custId,
+			@NotBlank(message = "Name is Mandatory") String custName,
+			@NotBlank(message = "Address is Mandatory") String address, long contactNo,
+			@NotBlank(message = "Email is Mandatory") @Email(message = "Invalied Email") String email) {
+		super();
+		this.id = id;
+		this.custId = custId;
+		this.custName = custName;
+		this.address = address;
+		this.contactNo = contactNo;
+		this.email = email;
+	}
+		
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -114,7 +134,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", custId=" + custId + ", custName=" + custName + ", address=" + address
-				+ ", contactNo=" + contactNo + ", email=" + email + /*", products=" + products + */", purchases="
-				+ purchases + "]";
+				+ ", contactNo=" + contactNo + ", email=" + email + ", purchase=" + purchase + ", product=" + product
+				+ "]";
 	}
 }

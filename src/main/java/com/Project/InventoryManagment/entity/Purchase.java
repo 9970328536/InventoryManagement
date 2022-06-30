@@ -9,16 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name="purchaseTbl")
-@JsonIgnoreProperties("hibernateLazyInitializer")
 
-public class Purchase {
-     @Id
+public class Purchase  {
+     
+	@Id
+	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue=101)
 	private long id;
 	private long purchaseId;
 	private Date date;
@@ -30,9 +32,9 @@ public class Purchase {
 	private double totalCost;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	 @JoinColumn(name="custId")
-	 @JsonIgnoreProperties("purchases")
+	 @JsonIgnoreProperties("purchase")	
 	 private Customer customer;
+	
 	
 	public Customer getCustomer() {
 		return customer;
@@ -40,6 +42,7 @@ public class Purchase {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
 	public long getId() {
 		return id;
 	}
