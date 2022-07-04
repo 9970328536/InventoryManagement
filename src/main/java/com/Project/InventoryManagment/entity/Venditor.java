@@ -12,8 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity(name="SupplierTbl")
@@ -21,7 +20,7 @@ public class Venditor  {
     
 	@Id
 	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=1)
+	@SequenceGenerator(name= "seq", initialValue=101)
      private long id;
 	@Column(nullable=false)
 	@NotBlank(message="Id is Mandatory")
@@ -40,7 +39,7 @@ public class Venditor  {
      private boolean status;
      
      @OneToMany(mappedBy="venditor")
-     @JsonIgnoreProperties("venditor")
+     @JsonIgnore
      private List<Product> product;
              
 	public long getId() {

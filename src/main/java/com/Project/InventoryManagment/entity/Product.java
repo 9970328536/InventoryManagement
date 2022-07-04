@@ -8,14 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity(name="ProductTbl")
@@ -23,7 +21,7 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=101)
+	@SequenceGenerator(name= "seq", initialValue=1)
 	private long id;
 	@Column(nullable=false)
 	@NotBlank(message="code is Mandatory")
@@ -38,12 +36,11 @@ public class Product {
 	 private int quantity;
 	 
 	 @ManyToOne(fetch=FetchType.LAZY)
-	 @JsonIgnoreProperties("product")
+	 @JsonIgnore
 	 private Venditor venditor;
 	 
-	 @ManyToMany
-	 @JsonIgnoreProperties("product")
-	 @JoinTable(name="product_customer", joinColumns= @JoinColumn(name="prdid"), inverseJoinColumns= @JoinColumn(name="custid") )
+	 @ManyToMany(mappedBy="product")
+	 @JsonIgnore
 	 private List<Customer> customer; 
 
 	public long getId() {
@@ -135,6 +132,6 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", prd_code=" + prd_code + ", productName=" + productName + ", description="
 				+ description + ", price=" + price + ", quantity=" + quantity + ", venditor=" + venditor + ", customer="
-				+ customer + "]";
+				+ customer +"]";
 	}
 		}

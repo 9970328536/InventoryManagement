@@ -2,12 +2,13 @@ package com.Project.InventoryManagment.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="customerTbl")
@@ -23,7 +24,7 @@ public class Customer  {
 	 
 	@Id
 	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=101)
+	@SequenceGenerator(name= "seq", initialValue=501)
 	private long id;
 	@Column(nullable=false)
 	@NotBlank(message="Id is Mandatory")
@@ -39,12 +40,13 @@ public class Customer  {
 	@Email(message="Invalied Email")
 	private String email;
 	
-	@OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
-	@JsonIgnoreProperties("customer")
+	@OneToMany(mappedBy="customer")
+	@JsonIgnore
 	private List<Purchase> purchase;
 	
-	@ManyToMany(mappedBy="customer")
-	@JsonIgnoreProperties("customer")
+	@ManyToMany
+	@JoinTable(name="customer_product", joinColumns= @JoinColumn(name="custid"), inverseJoinColumns= @JoinColumn(name="prdid"))
+	@JsonIgnore
 	private List<Product> product;
 	
 	public long getId() {
