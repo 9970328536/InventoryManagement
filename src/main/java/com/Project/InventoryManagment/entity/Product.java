@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Product {
 	
 	@Id
-	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=1)
+	@GeneratedValue(generator="seq1", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq1", initialValue=101)
 	private long id;
 	@Column(nullable=false)
 	@NotBlank(message="code is Mandatory")
@@ -123,8 +123,18 @@ public class Product {
 	}
 
 
-	public Product() {
+
+	public Product(long id, @NotBlank(message = "code is Mandatory") String prd_code,
+			@NotBlank(message = "Product name is Mandatory") String productName,
+			@NotBlank(message = "Description is Mandatory") String description) {
 		super();
+		this.id = id;
+		this.prd_code = prd_code;
+		this.productName = productName;
+		this.description = description;
+	}
+
+	public Product() {
 		// TODO Auto-generated constructor stub
 	}
 

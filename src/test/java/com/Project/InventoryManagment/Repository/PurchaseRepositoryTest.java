@@ -37,18 +37,18 @@ public class PurchaseRepositoryTest {
 
 	@Test
     public void getPurchaseByIdTest() {
-    	Purchase purchase = purchaseRepository.findById(602L).get();
+    	Purchase purchase = purchaseRepository.findById(552l).get();
     	
-        Assertions.assertThat(purchase.getId()).isEqualTo(602L);
+        Assertions.assertThat(purchase.getId()).isEqualTo(552l);
     }
 	
 	 @Test
 	    public void deletePurchase() {
-	    	Purchase purch = purchaseRepository.findById(602L).get();
+	    	Purchase purch = purchaseRepository.findById(552L).get();
 	    	purchaseRepository.delete(purch);
 	    	
 	    	Purchase purchase = null;
-	    	Optional<Purchase> purch1 = purchaseRepository.findById(602l);
+	    	Optional<Purchase> purch1 = purchaseRepository.findById(552l);
 	    	
 	    	if(purch1.isPresent()) {
 	    		purchase = purch1.get();
@@ -58,7 +58,7 @@ public class PurchaseRepositoryTest {
 	 
 	 @Test
 	    public void updatePurchaseTest() {
-	    	Purchase purchase = purchaseRepository.findById(602L).get();
+	    	Purchase purchase = purchaseRepository.findById(552L).get();
 	    	
 	    	purchase.setTotalCost(2552);
 	    	Purchase updated = purchaseRepository.save(purchase);

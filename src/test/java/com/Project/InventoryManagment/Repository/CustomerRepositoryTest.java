@@ -37,15 +37,15 @@ public class CustomerRepositoryTest {
 	
 	@Test
 	public void getCustomerByIdTest() {
-		Customer customer = customerRepository.findById(205L).get();
+		Customer customer = customerRepository.findById(152L).get();
 		
-        Assertions.assertThat(customer.getId()).isEqualTo(205L);
+        Assertions.assertThat(customer.getId()).isEqualTo(152L);
 
 	}
 	
 	@Test
 	public void updateCustomerTest() {
-		Customer customer = customerRepository.findById(205L).get();
+		Customer customer = customerRepository.findById(152L).get();
 	      
 		customer.setAddress("mumbai");
 		Customer updated =customerRepository.save(customer);
@@ -55,11 +55,11 @@ public class CustomerRepositoryTest {
 	
 	@Test
 	public void dleteCustomerTest() {
-		 Customer cust = customerRepository.findById(202l).get();
+		 Customer cust = customerRepository.findById(152l).get();
 		 customerRepository.delete(cust);
 		 
 		 Customer customer =null;
-		  Optional<Customer> cust1 = customerRepository.findById(202l);
+		  Optional<Customer> cust1 = customerRepository.findById(152l);
 		  
 		  if(cust1.isPresent()) {
 			  customer = cust1.get();

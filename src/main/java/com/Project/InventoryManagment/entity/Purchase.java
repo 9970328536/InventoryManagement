@@ -21,8 +21,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Purchase  {
      
 	@Id
-	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=1001)
+	@GeneratedValue(generator="seq3", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq3", initialValue=5001)
 	private long id;
 	private long purchaseId;
 	private LocalDateTime date;
@@ -108,6 +108,17 @@ public class Purchase  {
 		this.totalCost = totalCost;
 		this.customer = customer;
 	}
+	
+	
+	public Purchase(long id, long purchaseId, @NotBlank(message = "Product Name maintion") String productName,
+			double unitPrice) {
+		super();
+		this.id = id;
+		this.purchaseId = purchaseId;
+		this.productName = productName;
+		this.unitPrice = unitPrice;
+	}
+
 	public Purchase() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -12,6 +12,7 @@ import com.Project.InventoryManagment.Exception.EmailNotFoundException;
 import com.Project.InventoryManagment.Exception.GivenIdNotFoundException;
 import com.Project.InventoryManagment.Exception.GivenNameNotFoundException;
 import com.Project.InventoryManagment.Exception.NoRecordFoundException;
+import com.Project.InventoryManagment.Exception.RecordAlreadyExistException;
 import com.Project.InventoryManagment.entity.Customer;
 import com.Project.InventoryManagment.repository.CustomerRepository;
 
@@ -23,7 +24,13 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public Customer saveCustomer(Customer customer) {
+		Optional<Customer> cust = customerRepository.findById(customer.getId());
+		
+		if(!cust.isPresent()) {
 		return customerRepository.save(customer);
+		}else {
+			throw new RecordAlreadyExistException();
+		}
 	}
 
 	@Override

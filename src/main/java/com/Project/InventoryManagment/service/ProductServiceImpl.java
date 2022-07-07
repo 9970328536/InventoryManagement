@@ -12,6 +12,7 @@ import com.Project.InventoryManagment.Exception.GivenIdNotFoundException;
 import com.Project.InventoryManagment.Exception.GivenNameNotFoundException;
 import com.Project.InventoryManagment.Exception.NoRecordFoundException;
 import com.Project.InventoryManagment.Exception.PriceNotFoundException;
+import com.Project.InventoryManagment.Exception.RecordAlreadyExistException;
 import com.Project.InventoryManagment.entity.Product;
 import com.Project.InventoryManagment.repository.ProductRepository;
 
@@ -22,7 +23,13 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public Product saveProduct(Product product) {
-		return productRepository.save(product);
+		Optional<Product> prd = productRepository.findById(product.getId());
+				if(!prd.isPresent()) {
+				 return productRepository.save(product);
+				}else {
+					throw new RecordAlreadyExistException();
+				}
+		
 	}
 
 	@Override

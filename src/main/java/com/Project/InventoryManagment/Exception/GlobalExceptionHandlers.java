@@ -70,5 +70,10 @@ public class GlobalExceptionHandlers {
 	    });
 	    return new ResponseEntity<Map<String,String>>(errors, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(RecordAlreadyExistException.class)
+	public ResponseEntity<Object> hendleRecordAlreadyExistException(){
+	return new ResponseEntity<Object>("Reorde is Already Exist.", HttpStatus.FOUND);
+	}
 }
 

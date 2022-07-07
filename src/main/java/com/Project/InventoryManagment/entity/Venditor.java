@@ -20,7 +20,7 @@ public class Venditor  {
     
 	@Id
 	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=101)
+	@SequenceGenerator(name= "seq", initialValue=1)
      private long id;
 	@Column(nullable=false)
 	@NotBlank(message="Id is Mandatory")
@@ -118,4 +118,15 @@ public class Venditor  {
 		this.status = status;
 		this.product = product;
 	}
+	public Venditor(long id, @NotBlank(message = "Id is Mandatory") String supId,
+			@NotBlank(message = "Supplier Name is Mandatory") String supName,
+			@NotBlank(message = "Supplier Address is Mandatory") String supAddress) {
+		super();
+		this.id = id;
+		this.supId = supId;
+		this.supName = supName;
+		this.supAddress = supAddress;
+	}
+	
+	
 }

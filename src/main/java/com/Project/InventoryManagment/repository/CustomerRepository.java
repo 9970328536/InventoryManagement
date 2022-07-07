@@ -15,7 +15,7 @@ public interface CustomerRepository extends JpaRepository<Customer , Long> {
 
 	List<Customer> findByCustId(String custId);
 	
-//	@Query("Select c from CustomerTbl c where c.custName =: custName")
+//	@Query("Select c from Customer c where c.custName =: custName")
 	List<Customer> findByCustName(String custName);
 
 	List<Customer> findByEmail(String email);
@@ -25,5 +25,7 @@ public interface CustomerRepository extends JpaRepository<Customer , Long> {
 	List<Customer> findByAddress(String address);
 
 
-
 }
+
+//@Query("Select p from ProductTbl p where p.price =:price")
+//List<Product> findProductByPrice(@Param("price")double price);

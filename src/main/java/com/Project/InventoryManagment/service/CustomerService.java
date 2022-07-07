@@ -6,7 +6,6 @@ import com.Project.InventoryManagment.entity.Customer;
 
 public interface CustomerService {
 
-	Customer saveCustomer(Customer customer);
 
 	List<Customer> getCustomerList();
 
@@ -25,5 +24,7 @@ public interface CustomerService {
 	List<Customer> getByContactNo(long contactNo);
 
 	List<Customer> getByAddress(String address);
+
+	Customer saveCustomer(Customer customer);
 
 }

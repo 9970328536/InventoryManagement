@@ -10,6 +10,7 @@ import com.Project.InventoryManagment.Exception.AddressNotFoundException;
 import com.Project.InventoryManagment.Exception.GivenIdNotFoundException;
 import com.Project.InventoryManagment.Exception.GivenNameNotFoundException;
 import com.Project.InventoryManagment.Exception.NoRecordFoundException;
+import com.Project.InventoryManagment.Exception.RecordAlreadyExistException;
 import com.Project.InventoryManagment.entity.Venditor;
 import com.Project.InventoryManagment.repository.VenditorRepository;
 @Service
@@ -19,7 +20,13 @@ public class VenditorServiceImpl implements VenditorService{
 	
 	@Override
 	public Venditor saveVenditor(Venditor venditor) {
-		return venditorRepository.save(venditor);
+		Optional<Venditor> ven = venditorRepository.findById(venditor.getId());
+		
+		  if(!ven.isPresent()) {
+			  return venditorRepository.save(venditor);
+		  }  else {
+			  throw new RecordAlreadyExistException();
+		  }
 	}
 
 	@Override

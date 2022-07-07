@@ -11,6 +11,7 @@ import com.Project.InventoryManagment.Exception.CostNotFoundException;
 import com.Project.InventoryManagment.Exception.GivenIdNotFoundException;
 import com.Project.InventoryManagment.Exception.GivenNameNotFoundException;
 import com.Project.InventoryManagment.Exception.NoRecordFoundException;
+import com.Project.InventoryManagment.Exception.RecordAlreadyExistException;
 import com.Project.InventoryManagment.entity.Purchase;
 import com.Project.InventoryManagment.repository.PurchaseRepository;
 
@@ -21,7 +22,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 	
 	@Override
 	public Purchase savePurchase(Purchase purchase) {
+		Optional<Purchase> pur = purchaseRepository.findById(purchase.getId());
+		if(!pur.isPresent()){
 		return purchaseRepository.save(purchase);
+		}else {
+			throw new RecordAlreadyExistException();
+		}
 	}
 
 	@Override

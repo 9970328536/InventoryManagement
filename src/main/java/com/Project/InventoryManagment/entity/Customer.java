@@ -23,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Customer  {
 	 
 	@Id
-	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=501)
+	@GeneratedValue(generator="seq2", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq2", initialValue=1001)
 	private long id;
 	@Column(nullable=false)
 	@NotBlank(message="Id is Mandatory")
@@ -127,7 +127,17 @@ public class Customer  {
 		this.contactNo = contactNo;
 		this.email = email;
 	}
-		
+			
+	public Customer(long id, @NotBlank(message = "Id is Mandatory") String custId,
+			@NotBlank(message = "Name is Mandatory") String custName,
+			@NotBlank(message = "Address is Mandatory") String address) {
+		super();
+		this.id = id;
+		this.custId = custId;
+		this.custName = custName;
+		this.address = address;
+	}
+	
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
