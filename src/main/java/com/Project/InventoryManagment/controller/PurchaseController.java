@@ -70,7 +70,6 @@ public class PurchaseController {
 	
 	@GetMapping("/GetByPurchaseDate/{date}")
 	public List<Purchase> getByDate(@PathVariable("date") String date){
-		//DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:ss");
 		return purchaseService.getByDate(LocalDate.parse(date));
 	}
 }
