@@ -22,7 +22,7 @@ public class VenditorRepositoryTest {
 	
 	@Test 
 	public void saveVenditor() {
-		Venditor venditor = venditorRepository.save(new Venditor(52,"v8","nhnh","yyhy",55562336652L,"ggyy@gmail.com",true, null));
+		Venditor venditor = venditorRepository.save(new Venditor(52,"v8","nhnh","yyhy",55562336652L,"ggyy@gmail.com",true));
 		
 		Assertions.assertThat(venditor.getId()).isGreaterThan(0);
 	}

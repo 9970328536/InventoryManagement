@@ -1,19 +1,13 @@
 package com.Project.InventoryManagment.entity;
 
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity(name="ProductTbl")
@@ -35,14 +29,7 @@ public class Product {
 	 private double price;
 	 private int quantity;
 	 
-	 @ManyToOne(fetch=FetchType.LAZY)
-	 @JsonIgnore
-	 private Venditor venditor;
 	 
-	 @ManyToMany(mappedBy="product")
-	 @JsonIgnore
-	 private List<Customer> customer; 
-
 	public long getId() {
 		return id;
 	}
@@ -91,26 +78,10 @@ public class Product {
 		this.quantity = quantity;
 	}
 	
-	public Venditor getVenditor() {
-		return venditor;
-	}
-
-	public void setVenditor(Venditor venditor) {
-		this.venditor = venditor;
-	}
-
-	public List<Customer> getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(List<Customer> customer) {
-		this.customer = customer;
-	}
 	
 	public Product(long id, @NotBlank(message = "code is Mandatory") String prd_code,
 			@NotBlank(message = "Product name is Mandatory") String productName,
-			@NotBlank(message = "Description is Mandatory") String description, double price, int quantity,
-			Venditor venditor, List<Customer> customer) {
+			@NotBlank(message = "Description is Mandatory") String description, double price, int quantity) {
 		super();
 		this.id = id;
 		this.prd_code = prd_code;
@@ -118,8 +89,6 @@ public class Product {
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
-		this.venditor = venditor;
-		this.customer = customer;
 	}
 
 
@@ -141,7 +110,6 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", prd_code=" + prd_code + ", productName=" + productName + ", description="
-				+ description + ", price=" + price + ", quantity=" + quantity + ", venditor=" + venditor + ", customer="
-				+ customer +"]";
+				+ description + ", price=" + price + ", quantity=" + quantity + "]";
 	}
 		}

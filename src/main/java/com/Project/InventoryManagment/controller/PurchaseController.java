@@ -1,5 +1,7 @@
 package com.Project.InventoryManagment.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -67,8 +69,8 @@ public class PurchaseController {
 	}
 	
 	@GetMapping("/GetByPurchaseDate/{date}")
-	public List<Purchase> getByDate(@PathVariable("date") Date date){
-		return purchaseService.getByDate(date);
+	public List<Purchase> getByDate(@PathVariable("date") String date){
+		//DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:ss");
+		return purchaseService.getByDate(LocalDate.parse(date));
 	}
-
 }

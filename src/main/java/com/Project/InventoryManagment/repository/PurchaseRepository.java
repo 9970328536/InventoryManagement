@@ -1,6 +1,7 @@
 package com.Project.InventoryManagment.repository;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,6 @@ public interface PurchaseRepository extends JpaRepository<Purchase,Long>{
 
 	List<Purchase> findByTotalCost(double totalCost);
 
-	List<Purchase> findByDate(Date date);
+	List<Purchase> findByDate(LocalDate date);
 
 }

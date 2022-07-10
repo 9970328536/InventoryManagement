@@ -1,6 +1,6 @@
 package com.Project.InventoryManagment.service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,11 +34,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public List<Purchase> getPurchaseList() {
 		List<Purchase> purchases = purchaseRepository.findAll();
 		
-		if(purchases.isEmpty())
+		if(purchases.isEmpty()) {
 			throw new NoRecordFoundException();
-		else 
+		}else { 
 			return purchases;
-	}
+				}
+		}
 
 	@Override
 	public Purchase getPurchaseById(long id) {
@@ -55,7 +56,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 		pur = purchaseRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
 		
 		pur.setPurchaseId(purchase.getPurchaseId());
-		pur.setDate(purchase.getDate());
 		pur.setProductName(purchase.getProductName());
 		pur.setQuantity(purchase.getQuantity());
 		pur.setUnitPrice(purchase.getUnitPrice());
@@ -101,12 +101,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	@Override
-	public List<Purchase> getByDate(Date date) {
-		List<Purchase> purchase= purchaseRepository.findByDate(date);
-		if(purchase.isEmpty())
-			throw new NoRecordFoundException();
-		else
-			return purchase;
+	public List<Purchase> getByDate(LocalDate date) {
+			System.out.println(date);
+	         return purchaseRepository.findByDate(date);
 	}
 
 }

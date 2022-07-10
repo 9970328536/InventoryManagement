@@ -23,7 +23,7 @@ public class PurchaseRepositoryTest {
 	@Test
 	public void savePurchaseTest() {
 		
-		Purchase purchase = purchaseRepository.save(new Purchase(25,52,null, "tv","jnnn",5225,412, null));
+		Purchase purchase = purchaseRepository.save(new Purchase(25,52,null, "tv","jnnn",5225,412));
 		
 	          Assertions.assertThat(purchase.getId()).isGreaterThan(0);
 	}

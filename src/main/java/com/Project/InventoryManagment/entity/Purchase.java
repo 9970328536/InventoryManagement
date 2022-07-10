@@ -1,19 +1,15 @@
 package com.Project.InventoryManagment.entity;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity(name="purchaseTbl")
@@ -25,7 +21,7 @@ public class Purchase  {
 	@SequenceGenerator(name= "seq3", initialValue=5001)
 	private long id;
 	private long purchaseId;
-	private LocalDateTime date;
+	private LocalDate date;
 	@NotBlank(message="Product Name maintion")
 	private String productName;
 	@NotBlank(message="Quantity is Mandatory")
@@ -33,23 +29,12 @@ public class Purchase  {
 	private double unitPrice;
 	private double totalCost;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	 @JsonIgnore	
-	 private Customer customer;
-	
 	@PrePersist
 	public void addDate() {
-		this.date= LocalDateTime.now();
-		this.customer=getCustomer();
+		this.date= LocalDate.now();
+//		this.customer=getCustomer();
 	}
 	
-	public Customer getCustomer() {
-		return customer;
-	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public long getId() {
 		return id;
 	}
@@ -62,10 +47,10 @@ public class Purchase  {
 	public void setPurchaseId(long purchaseId) {
 		this.purchaseId = purchaseId;
 	}
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public String getProductName() {
@@ -94,10 +79,9 @@ public class Purchase  {
 	}
 	
 	
-	public Purchase(long id, long purchaseId, LocalDateTime date,
+	public Purchase(long id, long purchaseId, LocalDate date,
 			@NotBlank(message = "Product Name maintion") String productName,
-			@NotBlank(message = "Quantity is Mandatory") String quantity, double unitPrice, double totalCost,
-			Customer customer) {
+			@NotBlank(message = "Quantity is Mandatory") String quantity, double unitPrice, double totalCost) {
 		super();
 		this.id = id;
 		this.purchaseId = purchaseId;
@@ -106,7 +90,6 @@ public class Purchase  {
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 		this.totalCost = totalCost;
-		this.customer = customer;
 	}
 	
 	
@@ -126,8 +109,7 @@ public class Purchase  {
 	@Override
 	public String toString() {
 		return "Purchase [id=" + id + ", purchaseId=" + purchaseId + ", date=" + date + ", productName=" + productName
-				+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", totalCost=" + totalCost + ", customer="
-				+ customer + "]";
+				+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", totalCost=" + totalCost +"]";
 	}
 	
 }

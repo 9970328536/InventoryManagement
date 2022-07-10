@@ -32,10 +32,11 @@ public class VenditorServiceImpl implements VenditorService{
 	@Override
 	public List<Venditor> getVenditorList() {
 		List<Venditor> venditors = venditorRepository.findAll();
-		if(venditors.isEmpty())
+		if(venditors.isEmpty()) {
 			throw new NoRecordFoundException();
-		else 
+		}else { 
 			return venditors;
+		}
 	}
 
 	@Override

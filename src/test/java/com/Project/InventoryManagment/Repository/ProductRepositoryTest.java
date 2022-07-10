@@ -22,7 +22,7 @@ public class ProductRepositoryTest {
 	@Test
 	public void saveProductTest() {
 		
-		Product product = productRepository.save(new Product(25,"P1","tv","42 inch",65544,12, null, null));
+		Product product = productRepository.save(new Product(25,"P1","tv","42 inch",65544,12));
 		
 	          Assertions.assertThat(product.getId()).isGreaterThan(0);
 	}

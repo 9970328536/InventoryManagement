@@ -1,18 +1,14 @@
 package com.Project.InventoryManagment.entity;
 
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity(name="SupplierTbl")
@@ -38,10 +34,7 @@ public class Venditor  {
      private String email;
      private boolean status;
      
-     @OneToMany(mappedBy="venditor")
-     @JsonIgnore
-     private List<Product> product;
-             
+     
 	public long getId() {
 		return id;
 	}
@@ -85,13 +78,7 @@ public class Venditor  {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public List<Product> getProduct() {
-		return product;
-	}
-	public void setProduct(List<Product> product) {
-		this.product = product;
-	}
-	
+		
 	public Venditor() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -100,14 +87,14 @@ public class Venditor  {
 	@Override
 	public String toString() {
 		return "Venditor [id=" + id + ", supId=" + supId + ", supName=" + supName + ", supAddress=" + supAddress
-				+ ", contactNo=" + contactNo + ", email=" + email + ", status=" + status + ", product=" + product + "]";
+				+ ", contactNo=" + contactNo + ", email=" + email + ", status=" + status + "]";
 	}
 	
 	public Venditor(long id, @NotBlank(message = "Id is Mandatory") String supId,
 			@NotBlank(message = "Supplier Name is Mandatory") String supName,
 			@NotBlank(message = "Supplier Address is Mandatory") String supAddress, long contactNo,
-			@NotBlank(message = "Email is Mandatory") @Email(message = "Invalied Email") String email, boolean status,
-			List<Product> product) {
+			@NotBlank(message = "Email is Mandatory") @Email(message = "Invalied Email") String email, boolean status)
+	{
 		super();
 		this.id = id;
 		this.supId = supId;
@@ -116,7 +103,6 @@ public class Venditor  {
 		this.contactNo = contactNo;
 		this.email = email;
 		this.status = status;
-		this.product = product;
 	}
 	public Venditor(long id, @NotBlank(message = "Id is Mandatory") String supId,
 			@NotBlank(message = "Supplier Name is Mandatory") String supName,

@@ -1,5 +1,6 @@
 package com.Project.InventoryManagment.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,6 @@ public interface PurchaseService {
 
 	List<Purchase> getByTotalCost(double totalCost);
 
-	List<Purchase> getByDate(Date date);
-
-
+	List<Purchase> getByDate(LocalDate date);
 
 }
